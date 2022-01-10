@@ -12,9 +12,10 @@ services:
     depends_on: 
       - mongodb
     volumes: 
-      - ./nodejs:/app 
+      - ./nodejs:/app
     ports: 
-      - "4000:4000"
+      - "5000:5000"
+    entrypoint: ["node", "app.js"]
   
 volumes: 
   my_data: 
