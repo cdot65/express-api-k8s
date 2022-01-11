@@ -2,14 +2,8 @@
 
 An example project that deploys an Express API through a kubernetes cluster
 
-> get /tasks
+## Documentation Site
 
-![list](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/images/list.png "get /tasks")
+For all information about this project, including the nitty-gritty on how it works, please reference the documentation; it's literally a single-pager.
 
-> post /tasks
-
-![create](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/images/create.png "post /tasks")
-
-> delete /tasks/:taskId
-
-![delete](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/images/delete.png "delete /tasks/:taskId")
+[official docs](https://cdot65.github.io/express-api-k8s/)
