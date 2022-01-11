@@ -282,16 +282,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-methods" class="md-nav__link">
-    API methods
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-model" class="md-nav__link">
-    Data Model
+  <a href="#api-methods" class="md-nav__link">
+    API methods
   </a>
+  
+    <nav class="md-nav" aria-label="API methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-new-task" class="md-nav__link">
+    Create a new task
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-list-of-tasks" class="md-nav__link">
+    Get list of tasks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-task" class="md-nav__link">
+    Delete task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -371,16 +398,43 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#api-methods" class="md-nav__link">
-    API methods
+  <a href="#data-model" class="md-nav__link">
+    Data Model
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#data-model" class="md-nav__link">
-    Data Model
+  <a href="#api-methods" class="md-nav__link">
+    API methods
   </a>
+  
+    <nav class="md-nav" aria-label="API methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-a-new-task" class="md-nav__link">
+    Create a new task
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get-list-of-tasks" class="md-nav__link">
+    Get list of tasks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-task" class="md-nav__link">
+    Delete task
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -414,20 +468,6 @@
 <h3 id="docker-compose">Docker Compose<a class="headerlink" href="#docker-compose" title="Permanent link">#</a></h3>
 <p>A <a href="https://github.com/cdot65/express-api-k8s/blob/main/files/docker-compose.yaml">docker-compose.yaml</a> file has been provided for local testing only.</p>
 <p>Remember our goal is to deploy this to a k8s cluster.</p>
-<h2 id="api-methods">API methods<a class="headerlink" href="#api-methods" title="Permanent link">#</a></h2>
-<p>The URI for our API methods will end with <code>/tasks</code> or <code>/tasks/:taskId</code></p>
-<blockquote>
-<p>post /tasks</p>
-</blockquote>
-<p><img alt="create" src="https://github.com/cdot65/express-api-k8s/blob/main/files/images/create.png?raw=true" /></p>
-<blockquote>
-<p>get /tasks</p>
-</blockquote>
-<p><img alt="list" src="https://github.com/cdot65/express-api-k8s/blob/main/files/images/list.png?raw=true" /></p>
-<blockquote>
-<p>delete /tasks/:taskId</p>
-</blockquote>
-<p><img alt="delete" src="https://github.com/cdot65/express-api-k8s/blob/main/files/images/delete.png?raw=true" /></p>
 <h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">#</a></h2>
 <p>For our requests, we&rsquo;ll need to align ourselves with the data model defined in <a href="https://github.com/cdot65/express-api-k8s/blob/main/files/nodejs/models/model.js">files/nodejs/models/model.js</a></p>
 <div class="highlight"><pre><span></span><code><span class="c1">// files/nodejs/models/model.js</span>
@@ -449,6 +489,70 @@
     <span class="p">}</span>
 <span class="p">});</span>
 </code></pre></div>
+<h2 id="api-methods">API methods<a class="headerlink" href="#api-methods" title="Permanent link">#</a></h2>
+<p>The URI for our API methods will end with <code>/tasks</code> or <code>/tasks/:taskId</code></p>
+<h3 id="create-a-new-task">Create a new task<a class="headerlink" href="#create-a-new-task" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>API URI</th>
+<th>Body ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td>/tasks</td>
+<td>True</td>
+</tr>
+</tbody>
+</table>
+<p>body</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;status&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"></span>
+<span class="w">        </span><span class="s2">&quot;pending&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="p">],</span><span class="w"></span>
+<span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;test out api methods&quot;</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+<p><img alt="create" src="https://github.com/cdot65/express-api-k8s/blob/main/files/images/create.png?raw=true" /></p>
+<h3 id="get-list-of-tasks">Get list of tasks<a class="headerlink" href="#get-list-of-tasks" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>API URI</th>
+<th>Body ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td>/tasks</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="list" src="https://github.com/cdot65/express-api-k8s/blob/main/files/images/list.png?raw=true" /></p>
+<h3 id="delete-task">Delete task<a class="headerlink" href="#delete-task" title="Permanent link">#</a></h3>
+<table>
+<thead>
+<tr>
+<th>HTTP Method</th>
+<th>API URI</th>
+<th>Body ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DELETE</td>
+<td>/tasks/:taskId</td>
+<td>False</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="delete" src="https://github.com/cdot65/express-api-k8s/blob/main/files/images/delete.png?raw=true" /></p>
 
               
             </article>
