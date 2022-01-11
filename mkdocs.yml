@@ -1,7 +1,7 @@
 site_name: Juniper Automation Examples
 site_author: cdot65
 site_description: A collection of DevOps examples for Juniper Networks platforms
-docs_dir: docs/
+docs_dir: files/docs/
 theme:
   name: material
   features:
