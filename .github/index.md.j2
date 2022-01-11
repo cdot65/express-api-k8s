@@ -1,0 +1,66 @@
+# {{page_title}}
+
+## Welcome
+
+First off, hello and welcome to the landing page of my app's documentation. My name is Calvin and I work in a sales capacity at Juniper Networks, and I am hoping that you find this project helpful.
+
+This project will stand up an example Express application with a working REST API with a handful of functions. A mongodb database will provide the necessary feature of storing and retrieving data for our little app.
+
+*This page is automatically generated using a Python script*
+
+## Containers
+
+### nodejs
+
+A Dockerfile has been provided at [files/nodejs](https://github.com/cdot65/express-api-k8s/blob/main/files/nodejs/Dockerfile); it is based on `node:alpine` and simply executes our code after copying it into the `/usr/src/app` directory.
+
+### mongodb
+
+Our database platform will be based upon the official `mongo:latest` image and requires no modification, so the only trace of it will be found in the [files/docker-compose.yaml](https://github.com/cdot65/express-api-k8s/blob/main/files/docker-compose.yaml) file.
+
+### Docker Compose
+
+A [docker-compose.yaml](https://github.com/cdot65/express-api-k8s/blob/main/files/docker-compose.yaml) file has been provided for local testing only.
+
+Remember our goal is to deploy this to a k8s cluster.
+
+## API methods
+
+The URI for our API methods will end with `/tasks` or `/tasks/:taskId`
+
+> post /tasks
+
+![create](https://github.com/cdot65/express-api-k8s/blob/main/files/images/create.png?raw=true)
+
+> get /tasks
+
+![list](https://github.com/cdot65/express-api-k8s/blob/main/files/images/list.png?raw=true)
+
+> delete /tasks/:taskId
+
+![delete](https://github.com/cdot65/express-api-k8s/blob/main/files/images/delete.png?raw=true)
+
+## Data Model
+
+For our requests, we'll need to align ourselves with the data model defined in [files/nodejs/models/model.js](https://github.com/cdot65/express-api-k8s/blob/main/files/nodejs/models/model.js)
+
+```javascript
+// files/nodejs/models/model.js
+const taskSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: 'Enter the name of the task'
+    },
+    date_created: {
+        type: Date,
+        default: Date.now
+    },
+    status: {
+        type: [{
+            type: String,
+            enum: ['pending', 'ongoing', 'completed']
+        }],
+        default: ['pending']
+    }
+});
+```
