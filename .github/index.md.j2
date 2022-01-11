@@ -24,22 +24,6 @@ A [docker-compose.yaml](https://github.com/cdot65/express-api-k8s/blob/main/file
 
 Remember our goal is to deploy this to a k8s cluster.
 
-## API methods
-
-The URI for our API methods will end with `/tasks` or `/tasks/:taskId`
-
-> post /tasks
-
-![create](https://github.com/cdot65/express-api-k8s/blob/main/files/images/create.png?raw=true)
-
-> get /tasks
-
-![list](https://github.com/cdot65/express-api-k8s/blob/main/files/images/list.png?raw=true)
-
-> delete /tasks/:taskId
-
-![delete](https://github.com/cdot65/express-api-k8s/blob/main/files/images/delete.png?raw=true)
-
 ## Data Model
 
 For our requests, we'll need to align ourselves with the data model defined in [files/nodejs/models/model.js](https://github.com/cdot65/express-api-k8s/blob/main/files/nodejs/models/model.js)
@@ -64,3 +48,42 @@ const taskSchema = new mongoose.Schema({
     }
 });
 ```
+
+## API methods
+
+The URI for our API methods will end with `/tasks` or `/tasks/:taskId`
+
+### Create a new task
+
+| HTTP Method | API URI | Body ID |
+| ----------- | ----------- | ----------- |
+| POST | /tasks | True |
+
+body
+
+```json
+{
+    "status": [
+        "pending"
+    ],
+    "name": "test out api methods"
+}
+```
+
+![create](https://github.com/cdot65/express-api-k8s/blob/main/files/images/create.png?raw=true)
+
+### Get list of tasks
+
+| HTTP Method | API URI | Body ID |
+| ----------- | ----------- | ----------- |
+| GET | /tasks | False |
+
+![list](https://github.com/cdot65/express-api-k8s/blob/main/files/images/list.png?raw=true)
+
+### Delete task
+
+| HTTP Method | API URI | Body ID |
+| ----------- | ----------- | ----------- |
+| DELETE | /tasks/:taskId | False |
+
+![delete](https://github.com/cdot65/express-api-k8s/blob/main/files/images/delete.png?raw=true)
