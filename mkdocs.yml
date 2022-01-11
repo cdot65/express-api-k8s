@@ -13,7 +13,7 @@ theme:
         - python
         - shell
 extra_css:
-  - stylesheets/calvin.css
+  - stylesheets/cdot65.css
 copyright: Copyright &copy; 2022 cdot65
 repo_name: 'express-api-k8s'
 repo_url: https://github.com/cdot65/express-api-k8s
