@@ -1,6 +1,6 @@
-site_name: Juniper Automation Examples
+site_name: express-api-k8s
 site_author: cdot65
-site_description: A collection of DevOps examples for Juniper Networks platforms
+site_description: Example Express app deployed on k8s
 docs_dir: files/docs/
 theme:
   name: material
