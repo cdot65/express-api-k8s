@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 // mongoose instance connection url connection
 mongoose.Promise = global.Promise;
 // Replace the following with your Atlas connection string                                                                                                                                        
-const connectionUrl = "mongodb://localhost:27017/expressExample?retryWrites=true&w=majority";
+const connectionUrl = "mongodb://mongodb:27017/expressExample?retryWrites=true&w=majority";
 mongoose.connect(connectionUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
