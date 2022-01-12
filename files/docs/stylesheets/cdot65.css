@@ -11,16 +11,16 @@
     --md-default-bg-color--lightest:     #665c54;
   
     /* Primary color shades */
-    --md-primary-fg-color:               #031634;
+    --md-primary-fg-color:               #82AE34;
     --md-primary-fg-color--light:        #FFFFFF;
-    --md-primary-fg-color--dark:         #031634;
+    --md-primary-fg-color--dark:         #82AE34;
     --md-primary-bg-color:               #FFFFFF;
     --md-primary-bg-color--light:        #FFFFFF;
   
     /* Accent color shades */
-    --md-accent-fg-color:                #031634;
-    --md-accent-bg-color:                #031634;
-    --md-accent-bg-color--light:         #031634;
+    --md-accent-fg-color:                #82AE34;
+    --md-accent-bg-color:                #82AE34;
+    --md-accent-bg-color--light:         #82AE34;
   
     /* Code block color shades */
     
@@ -97,7 +97,7 @@
       --md-code-hl-string-color:           #A6E22E;
       --md-code-hl-operator-color:         #FD971F;
       --md-code-hl-punctuation-color:      #FFFFFF;
-      --md-code-hl-comment-color:          #7C4DFF;
+      --md-code-hl-comment-color:          #7c4dff;
       --block-code-bg-color:               #665c54;
   
       border-radius: .1rem;
