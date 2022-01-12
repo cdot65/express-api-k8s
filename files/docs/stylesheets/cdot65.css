@@ -24,8 +24,13 @@
   
     /* Code block color shades */
     
-    --md-code-bg-color:                  #504945;
+    --md-code-bg-color:                  #272822;
     --md-code-border-color:              #688d28;
+    --md-code-hl-constant-color:         #F92672;
+    --md-code-hl-keyword-color:          #66D9EF;
+    --md-code-hl-string-color:           #A6E22E;
+    --md-code-hl-operator-color:         #FD971F;
+    --md-code-hl-punctuation-color:      #FFFFFF;
     --block-code-bg-color:               #665c54;
     /* --md-code-fg-color:                  ...; */
   }
