@@ -11,16 +11,16 @@
     --md-default-bg-color--lightest:     #665c54;
   
     /* Primary color shades */
-    --md-primary-fg-color:               #82AE34;
+    --md-primary-fg-color:               #7C4DFF;
     --md-primary-fg-color--light:        #FFFFFF;
-    --md-primary-fg-color--dark:         #82AE34;
+    --md-primary-fg-color--dark:         #7C4DFF;
     --md-primary-bg-color:               #FFFFFF;
     --md-primary-bg-color--light:        #FFFFFF;
   
     /* Accent color shades */
-    --md-accent-fg-color:                #82AE34;
-    --md-accent-bg-color:                #82AE34;
-    --md-accent-bg-color--light:         #82AE34;
+    --md-accent-fg-color:                #7C4DFF;
+    --md-accent-bg-color:                #7C4DFF;
+    --md-accent-bg-color--light:         #7C4DFF;
   
     /* Code block color shades */
     
