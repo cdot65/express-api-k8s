@@ -23,6 +23,7 @@
     --md-accent-bg-color--light:         #82AE34;
   
     /* Code block color shades */
+    
     --md-code-bg-color:                  #504945;
     --md-code-border-color:              #688d28;
     --block-code-bg-color:               #665c54;
@@ -83,7 +84,7 @@
       padding: 0 .2941176471em;
       font-size: 80%;
       word-break: break-word;
-      background-color: var(--md-code-bg-color);
+      --md-code-bg-color: var(--md-default-bg-color--light);
       border-radius: .1rem;
       -webkit-box-decoration-break: clone;
       box-decoration-break: clone;
