@@ -90,6 +90,7 @@
       font-size: 80%;
       word-break: break-word;
       --md-code-bg-color:                  #272822;
+      --md-code-fg-color:                  #FFFFFF;
       --md-code-border-color:              #688d28;
       --md-code-hl-constant-color:         #F92672;
       --md-code-hl-keyword-color:          #66D9EF;
