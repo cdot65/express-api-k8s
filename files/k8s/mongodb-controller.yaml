@@ -19,7 +19,7 @@ spec:
           containerPort: 27017
           hostPort: 27017
         volumeMounts:
-            - name: mongo-persistent-storage
+            - name: volv
               mountPath: /data/db
       volumes:
         - name: volv
