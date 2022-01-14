@@ -87,3 +87,231 @@ body
 ![delete](https://github.com/cdot65/express-api-k8s/blob/main/files/images/delete.png?raw=true)
 
 *This page is automatically generated using a Python script within the .github directory*
+
+## Deploy to Kubernetes
+
+This example had been pulled directly from the [official documentation](https://github.com/kubernetes/examples/tree/master/staging/nodesjs-mongodb), so feel confident that this will work. My intent is to adjust this example later to my example.
+
+The first thing to do is create the MongoDB Service. This service is used by the other Pods in the cluster to find and connect to the MongoDB instance.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: mongo
+  name: mongo
+spec:
+  ports:
+    - port: 27017
+      targetPort: 27017
+  selector:
+    name: mongo
+```
+
+[Download file](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/k8s/mongodb-service.yaml)
+
+
+This service looks for all pods with the "mongo" tag, and creates a Service on port 27017 that targets port 27017 on the MongoDB pods. Port 27017 is the standard MongoDB port.
+
+To start the service, run:
+
+```bash
+kubectl create -f files/k8s/mongodb-service.yaml
+```
+
+### Creating the MongoDB Controller
+
+Next, create the MongoDB instance that runs the Database.  Databases also need persistent storage, which will be different for each platform.
+
+```yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: mongo
+  name: mongo-controller
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mongo
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        ports:
+        - name: mongo
+          containerPort: 27017
+          hostPort: 27017
+        volumeMounts:
+            - name: mongo-persistent-storage
+              mountPath: /data/db
+      volumes:
+        - name: mongo-persistent-storage
+          gcePersistentDisk:
+            pdName: mongo-disk
+            fsType: ext4
+```
+
+[Download file](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/k8s/mongodb-controller.yaml)
+
+Looking at this file from the bottom up:
+
+First, it creates a volume called "mongo-persistent-storage."
+
+In the above example, it is using a "gcePersistentDisk" to back the storage. This is only applicable if you are running your Kubernetes cluster in Google Cloud Platform.
+
+Create this controller with this command:
+
+```sh
+kubectl create -f files/k8s/mongodb-controller.yaml
+```
+
+At this point, MongoDB is up and running.
+
+Note: There is no password protection or auth running on the database by default. Please keep this in mind!
+
+### Creating the Node.js Service
+
+The next step is to create the Node.js service. This service is what will be the endpoint for the web site, and will load balance requests to the Node.js instances.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+  labels:
+    name: web
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 3000
+      protocol: TCP
+  selector:
+    name: web
+```
+
+[Download file](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/k8s/web-service.yaml)
+
+This service is called "web," and it uses a [LoadBalancer](https://kubernetes.io/docs/user-guide/services.md#type-loadbalancer) to distribute traffic on port 80 to port 3000 running on Pods with the "web" tag. Port 80 is the standard HTTP port, and port 3000 is the standard Node.js port.
+
+On Google Container Engine, a [network load balancer](https://cloud.google.com/compute/docs/load-balancing/network/) and [firewall rule](https://cloud.google.com/compute/docs/networking#addingafirewall) to allow traffic are automatically created.
+
+To start the service, run:
+
+```sh
+kubectl create -f files/k8s/web-service.yaml
+```
+
+If you are running on a platform that does not support LoadBalancer (i.e Bare Metal), you need to use a [NodePort](https://kubernetes.io/docs/user-guide/services.md#type-nodeport) with your own load balancer.
+
+You may also need to open appropriate Firewall ports to allow traffic.
+
+### Creating the Node.js Controller
+
+The final step is deploying the Node.js container that will run the application code. This container can easily by replaced by any other web serving frontend, such as Rails, LAMP, Java, Go, etc.
+
+The most important thing to keep in mind is how to access the MongoDB service.
+
+If you were running MongoDB and Node.js on the same server, you would access MongoDB like so:
+
+```javascript
+MongoClient.connect('mongodb://localhost:27017/database-name', function(err, db) { console.log(db); });
+```
+
+With this Kubernetes setup, that line of code would become:
+
+```javascript
+MongoClient.connect('mongodb://mongo:27017/database-name', function(err, db) { console.log(db); });
+```
+
+The MongoDB Service previously created tells Kubernetes to configure the cluster so 'mongo' points to the MongoDB instance created earlier.
+
+#### Custom Container
+
+You should have your own container that runs your Node.js code hosted in a container registry.
+
+See [this example](https://medium.com/google-cloud-platform-developer-advocates/running-a-mean-stack-on-google-cloud-platform-with-kubernetes-149ca81c2b5d#8edc) to see how to make your own Node.js container.
+
+Once you have created your container, create the web controller.
+
+```yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: web
+  name: web-controller
+spec:
+  replicas: 2
+  selector:
+    name: web
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      containers:
+      - image: <YOUR-CONTAINER>
+        name: web
+        ports:
+        - containerPort: 3000
+          name: http-server
+```
+
+[Download file](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/k8s/web-controller.yaml)
+
+Replace <YOUR-CONTAINER> with the url of your container.
+
+This Controller will create two replicas of the Node.js container, and each Node.js container will have the tag "web" and expose port 3000. The Service LoadBalancer will forward port 80 traffic to port 3000 automatically, along with load balancing traffic between the two instances.
+
+To start the Controller, run:
+
+```sh
+kubectl create -f files/k8s/web-controller.yaml
+```
+
+#### Demo Container
+
+If you DON'T want to create a custom container, you can use the following YAML file:
+
+Note: You cannot run both Controllers at the same time, as they both try to control the same Pods.
+
+```yaml
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  labels:
+    name: web
+  name: web-controller
+spec:
+  replicas: 2
+  selector:
+    name: web
+  template:
+    metadata:
+      labels:
+        name: web
+    spec:
+      containers:
+      - image: node:0.10.40
+        command: ['/bin/sh', '-c']
+        args: ['cd /home && git clone https://github.com/ijason/NodeJS-Sample-App.git demo && cd demo/EmployeeDB/ && npm install && sed -i -- ''s/localhost/mongo/g'' app.js && node app.js']
+        name: web
+        ports:
+        - containerPort: 3000
+          name: http-server
+```
+
+[Download file](https://raw.githubusercontent.com/cdot65/express-api-k8s/main/files/k8s/web-controller-demo.yaml)
+
+This will use the default Node.js container, and will pull and execute code at run time. This is not recommended; typically, your code should be part of the container.
+
+To start the Controller, run:
+
+```sh
+kubectl create -f files/k8s/web-controller-demo.yaml
+```
