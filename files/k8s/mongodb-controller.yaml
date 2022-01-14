@@ -22,7 +22,6 @@ spec:
             - name: mongo-persistent-storage
               mountPath: /data/db
       volumes:
-        - name: mongo-persistent-storage
-          gcePersistentDisk:
-            pdName: mongo-disk
-            fsType: ext4
+        - name: volv
+          persistentVolumeClaim:
+            claimName: express-mongo
